@@ -1,0 +1,175 @@
+{
+  "projectName": "SimpleDocs",
+  "version": "v1.0.0",
+  "showExampleToggle": true,
+  "services": [
+    {
+      "id": "product-service",
+      "nombre": "Product Service",
+      "descripcion": "Handles all operations related to products.",
+      "endpoints": [
+        {
+          "metodo": "GET",
+          "ruta": "/products",
+          "resumen": "Get all products",
+          "descripcion": "Retrieves a list of all available products.",
+          "parametros": [
+            {
+              "nombre": "limit",
+              "tipo": "integer",
+              "ubicacion": "query",
+              "requerido": false,
+              "descripcion": "The maximum number of products to return."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 200,
+            "cuerpo": [
+              { "id": "prod_1", "name": "Laptop", "price": 1200 },
+              { "id": "prod_2", "name": "Keyboard", "price": 75 }
+            ]
+          },
+          "respuesta_error": {
+            "codigo": 500,
+            "cuerpo": {
+              "error": "Server Error",
+              "message": "Could not retrieve products."
+            }
+          }
+        },
+        {
+          "metodo": "GET",
+          "ruta": "/products/{productId}",
+          "resumen": "Get a specific product",
+          "descripcion": "Retrieves a single product by its ID.",
+          "parametros": [
+            {
+              "nombre": "productId",
+              "tipo": "string",
+              "ubicacion": "path",
+              "requerido": true,
+              "descripcion": "The unique ID of the product."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 200,
+            "cuerpo": { "id": "prod_1", "name": "Laptop", "price": 1200 }
+          },
+          "respuesta_error": {
+            "codigo": 404,
+            "cuerpo": {
+              "error": "Not Found",
+              "message": "Product with the specified ID not found."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "inventory-service",
+      "nombre": "Inventory Service",
+      "descripcion": "Manages stock levels for products.",
+      "endpoints": [
+        {
+          "metodo": "POST",
+          "ruta": "/inventory/check",
+          "resumen": "Check product availability",
+          "descripcion": "Checks if a product is in stock.",
+          "parametros": [
+            {
+              "nombre": "productId",
+              "tipo": "string",
+              "ubicacion": "body",
+              "requerido": true,
+              "descripcion": "The ID of the product to check."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 200,
+            "cuerpo": { "productId": "prod_1", "inStock": true, "quantity": 55 }
+          },
+          "respuesta_error": {
+            "codigo": 400,
+            "cuerpo": {
+              "error": "Bad Request",
+              "message": "Invalid product ID format."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "auth-service",
+      "nombre": "Authentication Service",
+      "descripcion": "Handles user authentication and token management.",
+      "endpoints": [
+        {
+          "metodo": "POST",
+          "ruta": "/auth/login",
+          "resumen": "User Login",
+          "descripcion": "Authenticates a user and returns a session token.",
+          "parametros": [
+            {
+              "nombre": "credentials",
+              "tipo": "object",
+              "ubicacion": "body",
+              "requerido": true,
+              "descripcion": "User's email and password."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 200,
+            "cuerpo": {
+              "token": "a-very-secret-jwt",
+              "expiresIn": 3600
+            }
+          },
+          "respuesta_error": {
+            "codigo": 401,
+            "cuerpo": {
+              "error": "Unauthorized",
+              "message": "Invalid credentials provided."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "order-service",
+      "nombre": "Order Service",
+      "descripcion": "Manages customer orders.",
+      "endpoints": [
+        {
+          "metodo": "POST",
+          "ruta": "/orders",
+          "resumen": "Create a new order",
+          "descripcion": "Places a new order for a customer.",
+          "parametros": [
+            {
+              "nombre": "orderData",
+              "tipo": "object",
+              "ubicacion": "body",
+              "requerido": true,
+              "descripcion": "The details of the order, including items and shipping info."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 201,
+            "cuerpo": {
+              "orderId": "order_abc_123",
+              "status": "pending",
+              "total": 1275.00
+            }
+          },
+          "respuesta_error": {
+            "codigo": 400,
+            "cuerpo": {
+              "error": "Invalid Order",
+              "message": "One or more items are out of stock."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

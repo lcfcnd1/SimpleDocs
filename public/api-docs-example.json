@@ -1,0 +1,155 @@
+{
+  "projectName": "API Docs Example",
+  "version": "1.0.0",
+  "showExampleToggle": true,
+  "services": [
+    {
+      "id": "user-service",
+      "nombre": "User Service (Example)",
+      "descripcion": "This service handles user-related operations. It shows examples of all possible configurations.",
+      "endpoints": [
+        {
+          "metodo": "GET",
+          "ruta": "/users/{userId}",
+          "resumen": "Get user by ID",
+          "descripcion": "Retrieves a single user's details based on their unique ID. This endpoint demonstrates a 'path' parameter.",
+          "parametros": [
+            {
+              "nombre": "userId",
+              "tipo": "string",
+              "ubicacion": "path",
+              "requerido": true,
+              "descripcion": "The unique identifier of the user."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 200,
+            "cuerpo": {
+              "id": "user-123",
+              "name": "John Doe",
+              "email": "john.doe@example.com",
+              "registeredAt": "2023-01-15T10:00:00Z"
+            }
+          },
+          "respuesta_error": {
+            "codigo": 404,
+            "cuerpo": {
+              "error": "UserNotFound",
+              "message": "The requested user could not be found."
+            }
+          }
+        },
+        {
+          "metodo": "POST",
+          "ruta": "/users",
+          "resumen": "Create a new user",
+          "descripcion": "Creates a new user with the provided data. This endpoint demonstrates a 'body' parameter with a complex object and nested arrays.",
+          "parametros": [
+            {
+              "nombre": "userData",
+              "tipo": "object",
+              "ubicacion": "body",
+              "requerido": true,
+              "descripcion": "The user data for creation."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 201,
+            "cuerpo": {
+              "id": "user-456",
+              "name": "Jane Smith",
+              "email": "jane.smith@example.com",
+              "profile": {
+                "bio": "Software developer",
+                "avatarUrl": "https://example.com/avatar.png"
+              },
+              "roles": ["user", "editor"],
+              "createdAt": "2023-10-26T14:30:00Z"
+            }
+          },
+          "respuesta_error": {
+            "codigo": 400,
+            "cuerpo": {
+              "error": "InvalidInput",
+              "message": "Email is already in use or a required field is missing.",
+              "details": [
+                { "field": "email", "issue": "must be unique" }
+              ]
+            }
+          }
+        },
+        {
+          "metodo": "PUT",
+          "ruta": "/users/{userId}",
+          "resumen": "Update a user",
+          "descripcion": "Updates an existing user's information. This endpoint demonstrates multiple parameter types.",
+          "parametros": [
+            {
+              "nombre": "userId",
+              "tipo": "string",
+              "ubicacion": "path",
+              "requerido": true,
+              "descripcion": "The unique identifier of the user to update."
+            },
+            {
+              "nombre": "updatedData",
+              "tipo": "object",
+              "ubicacion": "body",
+              "requerido": true,
+              "descripcion": "The fields to update for the user."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 200,
+            "cuerpo": {
+              "id": "user-123",
+              "name": "Johnathan Doe",
+              "email": "john.doe@example.com",
+              "updatedAt": "2023-10-26T15:00:00Z"
+            }
+          },
+          "respuesta_error": {
+            "codigo": 401,
+            "cuerpo": {
+              "error": "Unauthorized",
+              "message": "You do not have permission to perform this action."
+            }
+          }
+        },
+        {
+          "metodo": "DELETE",
+          "ruta": "/users/{userId}",
+          "resumen": "Delete a user",
+          "descripcion": "Permanently deletes a user account. This action is irreversible.",
+          "parametros": [
+            {
+              "nombre": "userId",
+              "tipo": "string",
+              "ubicacion": "path",
+              "requerido": true,
+              "descripcion": "The unique identifier of the user to delete."
+            },
+            {
+                "nombre": "force",
+                "tipo": "boolean",
+                "ubicacion": "query",
+                "requerido": false,
+                "descripcion": "If true, bypasses the soft-delete and deletes immediately."
+            }
+          ],
+          "respuesta_exitosa": {
+            "codigo": 204,
+            "cuerpo": {}
+          },
+          "respuesta_error": {
+            "codigo": 500,
+            "cuerpo": {
+              "error": "InternalServerError",
+              "message": "An unexpected error occurred while trying to delete the user."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
