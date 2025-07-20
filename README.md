@@ -2,7 +2,7 @@
 
 API Explorer is a modern, dynamic, and fully responsive documentation viewer for your REST APIs. Built with Next.js and ShadCN UI, it parses a `api-docs.json` file to generate a beautiful and user-friendly interface for exploring your API services and endpoints.
 
-![API Explorer Screenshot](https://placehold.co/800x500.png)
+![API Explorer Screenshot](https://i.ibb.co/gMSMz6c5/chrome-Ukk-Za9i-X04.png)
 
 ## Features
 
